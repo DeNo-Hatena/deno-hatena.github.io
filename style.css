@@ -51,3 +51,15 @@ img{
   border-radius: 14px;
 }
 
+figure{
+  margin: 24px 0;
+}
+
+figure img{
+  max-width: 420px;   /* ← ここでサイズ調整 */
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
