@@ -41,3 +41,13 @@ a{
   border-bottom: 1px solid rgba(199,210,255,.35);
 }
 a:hover{ border-bottom-color: rgba(199,210,255,.9); }
+
+figure{ margin: 0 0 18px; }
+img{
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
