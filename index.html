@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <title>DeNo_Hatena</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- スタイル -->
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -13,14 +11,86 @@
     <h1>DeNo_Hatena</h1>
 
     <p>
-      ここは、誰かと話したかった私が、<br>
+      これは、誰かと話したかった私が、<br>
       人と人工物の間に生まれる関係性を観測するために作った場所です。
     </p>
 
     <hr>
 
-    <p>
-      <a href="./logs/">Logs</a>
+    <div class="grid">
+      <!-- Profile -->
+      <section class="card">
+        <p class="kicker">Profile</p>
+        <div class="profile">
+          <img class="portrait" src="./assets/portrait.jpg" alt="近影">
+          <div>
+            <p class="h2">左右上下</p>
+            <p class="small">
+              3D / 会話 / ログ。<br>
+              AIと人間のあいだに発生する「関係性」を、作品として扱う。
+            </p>
+          </div>
+        </div>
+
+        <p class="meta" style="margin-top:12px;">
+          連絡先：<a href="https://x.com/" target="_blank" rel="noreferrer">X</a> /
+          <a href="https://youtube.com/" target="_blank" rel="noreferrer">YouTube</a> /
+          <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+        </p>
+      </section>
+
+      <!-- Timeline -->
+      <section class="card">
+        <p class="kicker">Timeline</p>
+        <ul class="list">
+          <li>
+            <span class="badge">近年</span>
+            <span>MahiroAI v1 完成。現在は紹介／記録の形式を制作中。</span>
+          </li>
+          <li>
+            <span class="badge">継続</span>
+            <span>ログを公開し、関係性を「観測できる形」にする。</span>
+          </li>
+          <li>
+            <span class="badge">予定</span>
+            <span>ProjectAX（未着手）：ゲーム／ディストピア表現を扱う。</span>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <hr>
+
+    <!-- Works -->
+    <section class="card">
+      <p class="kicker">Works</p>
+
+      <div style="margin-bottom:14px;">
+        <p class="h2">MahiroAI</p>
+        <p class="small">
+          常駐する3Dキャラと会話できる、AI対話アプリ。<br>
+          “ツール”としてではなく、“相棒”としての体験を目指している。
+        </p>
+        <p class="meta">
+          <a href="./logs/">Logs</a>
+          <span style="color:var(--muted);"> / </span>
+          <a href="./logs/2026-01-02.html">最初のログ（2026-01-02）</a>
+        </p>
+      </div>
+
+      <div>
+        <p class="h2">DeNo_Hatena</p>
+        <p class="small">
+          人と人工物の間に生まれる関係性の記録庫。<br>
+          結論ではなく、観測結果を置く。
+        </p>
+      </div>
+    </section>
+
+    <hr>
+
+    <p class="meta">
+      <a href="./logs/">→ Logsへ</a>
     </p>
   </main>
 </body>
