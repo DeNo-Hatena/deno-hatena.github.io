@@ -43,6 +43,7 @@ a{
 a:hover{ border-bottom-color: rgba(199,210,255,.9); }
 
 figure{ margin: 0 0 18px; }
+
 img{
   max-width: 100%;
   height: auto;
@@ -63,6 +64,7 @@ figure img{
   border: 1px solid var(--line);
   border-radius: 14px;
 }
+
 /* ---- top layout ---- */
 .grid{
   display: grid;
@@ -100,6 +102,7 @@ figure img{
   gap: 14px;
   align-items: center;
 }
+
 .portrait{
   width: 84px;
   height: 84px;
@@ -109,6 +112,7 @@ figure img{
   flex: 0 0 auto;
   background: rgba(255,255,255,0.04);
 }
+
 .small{ font-size: 14px; }
 
 .list{
@@ -136,33 +140,46 @@ figure img{
   font-size: 12px;
   margin-right: 6px;
 }
+
 /* Works layout */
-.works-grid {
+.works-grid{
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
 }
 
+/* videoの下に出る謎余白防止 */
 .card video{
   display: block;
+  max-width: 100%;
+  height: auto;
 }
 
-/* PC表示時：3D Works の動画サイズを抑える */
+/* =========================
+   PC表示時：トップページ Works の動画・サムネを少し小さく
+   （トップは .works-grid がある）
+   ========================= */
 @media (min-width: 768px){
-  .card video{
+  .works-grid video,
+  .works-grid img{
     width: 85%;
     margin-left: auto;
     margin-right: auto;
+    display: block;
   }
 }
 
 @media (min-width: 1024px){
-  .card video{
+  .works-grid video,
+  .works-grid img{
     width: 75%;
   }
 }
-/* PC表示時：トップページ Works の動画・サムネを少し小さく */
-/* PC表示時：3D Works（個別ページ）の動画サイズを抑える */
+
+/* =========================
+   PC表示時：3D Works（個別ページ）の動画サイズを抑える
+   ※ /3d-character-works/index.html の <body> に class="works-page" を付ける前提
+   ========================= */
 @media (min-width: 768px){
   .works-page .card video{
     width: 85%;
@@ -176,5 +193,3 @@ figure img{
     width: 75%;
   }
 }
-
-
