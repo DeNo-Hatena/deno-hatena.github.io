@@ -136,3 +136,17 @@ figure img{
   font-size: 12px;
   margin-right: 6px;
 }
+/* Works layout */
+.works-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+/* PC表示 */
+@media (min-width: 768px) {
+  .works-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
