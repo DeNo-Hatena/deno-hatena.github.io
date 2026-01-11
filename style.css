@@ -277,4 +277,16 @@ figure img{
     margin-top: 0;
   }
 }
+.image-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+/* スマホ対応 */
+@media (max-width: 640px){
+  .image-grid{
+    grid-template-columns: 1fr;
+  }
+}
 
