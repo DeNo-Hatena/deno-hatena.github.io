@@ -200,4 +200,40 @@ figure img{
     align-items: start;
   }
 }
+/* =========================
+   3D Works: video layout (turntable + dance)
+   ========================= */
+.works-page .video-block{
+  margin-top: 12px;
+}
+
+.works-page video.v-media{
+  display: block;
+  width: 100%;          /* まずは100%基準 */
+  max-width: 560px;     /* ← ここが「全動画同じ横幅」の実体 */
+  margin: 0 auto;       /* 中央寄せ */
+  height: auto;
+  border-radius: 12px;
+}
+
+/* Usage examples section */
+.works-page .usage{
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(42,47,56,0.6);
+}
+
+.works-page .usage-title{
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.works-page .caption{
+  color: var(--muted);
+  font-size: 13px;
+  margin: 8px 0 0;
+}
 
