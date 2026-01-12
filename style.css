@@ -196,7 +196,7 @@ figure img{
 /* PC表示時：Works を横並びにする */
 @media (min-width: 768px){
   .works-grid{
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     align-items: start;
   }
 }
