@@ -303,3 +303,7 @@ figure img{
     grid-template-columns: 1fr;
   }
 }
+.home-page .works-grid img{
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
