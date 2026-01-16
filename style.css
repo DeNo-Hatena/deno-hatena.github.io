@@ -7,11 +7,13 @@
 }
 
 html,body{height:100%;}
+
 body{
   margin:0;
   background:var(--bg);
   color:var(--fg);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+               "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   line-height:1.8;
 }
 
@@ -27,7 +29,10 @@ h1{
   margin: 0 0 18px;
 }
 
-p{ color:var(--muted); margin: 0 0 18px; }
+p{
+  color:var(--muted);
+  margin: 0 0 18px;
+}
 
 hr{
   border:0;
@@ -40,9 +45,9 @@ a{
   text-decoration: none;
   border-bottom: 1px solid rgba(199,210,255,.35);
 }
-a:hover{ border-bottom-color: rgba(199,210,255,.9); }
-
-figure{ margin: 0 0 18px; }
+a:hover{
+  border-bottom-color: rgba(199,210,255,.9);
+}
 
 img{
   max-width: 100%;
@@ -52,25 +57,12 @@ img{
   border-radius: 14px;
 }
 
-figure{
-  margin: 24px 0;
-}
+/* ---------- layout ---------- */
 
-figure img{
-  max-width: 420px;   /* ← ここでサイズ調整 */
-  width: 100%;
-  height: auto;
-  display: block;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-}
-
-/* ---- top layout ---- */
 .grid{
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 28px;
-  align-items: start;
 }
 @media (max-width: 860px){
   .grid{ grid-template-columns: 1fr; }
@@ -79,7 +71,7 @@ figure img{
 .card{
   border: 1px solid var(--line);
   border-radius: 18px;
-  padding: 18px 18px 16px;
+  padding: 18px;
   background: rgba(255,255,255,0.02);
 }
 
@@ -97,6 +89,15 @@ figure img{
   color: var(--fg);
 }
 
+.small{ font-size: 14px; }
+
+.meta{
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ---------- profile ---------- */
+
 .profile{
   display: flex;
   gap: 14px;
@@ -107,13 +108,11 @@ figure img{
   width: 84px;
   height: 84px;
   border-radius: 18px;
-  border: 1px solid var(--line);
   object-fit: cover;
   flex: 0 0 auto;
-  background: rgba(255,255,255,0.04);
 }
 
-.small{ font-size: 14px; }
+/* ---------- list ---------- */
 
 .list{
   margin: 10px 0 0;
@@ -126,138 +125,55 @@ figure img{
 }
 .list li:first-child{ border-top: 0; }
 
-.meta{
-  color: var(--muted);
-  font-size: 13px;
-}
-
 .badge{
   display: inline-block;
   padding: 2px 8px;
   border: 1px solid rgba(42,47,56,0.9);
   border-radius: 999px;
-  color: var(--muted);
   font-size: 12px;
   margin-right: 6px;
 }
 
-/* Works layout */
+/* ---------- works ---------- */
+
 .works-grid{
   display: grid;
-  grid-template-columns: 1fr;
   gap: 24px;
 }
 
-/* videoの下に出る謎余白防止 */
+@media (min-width: 768px){
+  .works-grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ★ 共通サムネ（MahiroAIなど）：トリミングあり */
+.home-page .works-grid img{
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* ★ MahiLog 専用：横を切らない */
+.home-page .works-grid img.log-thumb{
+  aspect-ratio: 2 / 1;
+  object-fit: contain;
+  background: rgba(255,255,255,0.03);
+}
+
+/* video */
 .card video{
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-/* =========================
-   PC表示時：トップページ Works の動画・サムネを少し小さく
-   （トップは .works-grid がある）
-   ========================= */
-@media (min-width: 768px){
-  .works-grid video,
-  .works-grid img{
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-  }
+.home-page .square-video{
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
 }
 
-@media (min-width: 1024px){
-  .works-grid video,
-  .works-grid img{
-    width: 100%;
-  }
-}
+/* ---------- wide canvas ---------- */
 
-/* =========================
-   PC表示時：3D Works（個別ページ）の動画サイズを抑える
-   ※ /3d-character-works/index.html の <body> に class="works-page" を付ける前提
-   ========================= */
-@media (min-width: 768px){
-  .works-page .card video{
-    width: 85%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-@media (min-width: 1024px){
-  .works-page .card video{
-    width: 75%;
-  }
-}
-/* PC表示時：Works を横並びにする */
-@media (min-width: 768px){
-  .works-grid{
-    grid-template-columns: repeat(3, 1fr);
-    align-items: start;
-  }
-}
-/* =========================
-   3D Works: video layout (turntable + dance)
-   ========================= */
-.works-page .video-block{
-  margin-top: 12px;
-}
-
-.works-page video.v-media{
-  display: block;
-  width: 100%;          /* まずは100%基準 */
-  max-width: 560px;     /* ← ここが「全動画同じ横幅」の実体 */
-  margin: 0 auto;       /* 中央寄せ */
-  height: auto;
-  border-radius: 12px;
-}
-
-/* Usage examples section */
-.works-page .usage{
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(42,47,56,0.6);
-}
-
-.works-page .usage-title{
-  color: var(--muted);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin: 0 0 10px;
-}
-
-.works-page .caption{
-  color: var(--muted);
-  font-size: 13px;
-  margin: 8px 0 0;
-}
-/* =========================
-   3D Models page: use wider canvas on PC
-   ========================= */
-.works-page main{
-  max-width: 1200px; /* まず広げる。好みで 1280 / 1360 でもOK */
-}
-
-/* さらに横幅があるPCでは余裕を増やす */
-@media (min-width: 1280px){
-  .works-page main{
-    max-width: 1400px;
-  }
-}
-/* =========================
-   3D Models page: 2-column layout per character (PC only)
-   ========================= */
-.works-page .media-grid{
-  display: block; /* スマホは縦 */
-}
-/* =========================
-   Home page: use wider canvas on PC
-   ========================= */
 @media (min-width: 900px){
   .home-page main{
     max-width: 1200px;
@@ -268,46 +184,4 @@ figure img{
   .home-page main{
     max-width: 1400px;
   }
-}
-
-/* PCだけ左右に分ける */
-@media (min-width: 900px){
-  .works-page .media-grid{
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* 左=360 / 右=MMD */
-    gap: 18px;
-    align-items: start;
-    margin-top: 12px;
-  }
-
-  /* PCのときは動画をカラム幅いっぱい使う（統一） */
-  .works-page .media-grid video.v-media{
-    max-width: none; /* 560px制限を外して、2カラム内で100%にする */
-    width: 100%;
-  }
-
-  /* usage の上線を「右カラム内」に閉じ込める */
-  .works-page .media-grid .usage{
-    margin-top: 0;
-  }
-}
-.image-grid{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-}
-
-/* スマホ対応 */
-@media (max-width: 640px){
-  .image-grid{
-    grid-template-columns: 1fr;
-  }
-}
-.home-page .works-grid img{
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-}
-.home-page .square-video{
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
 }
