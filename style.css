@@ -192,3 +192,17 @@ body:not(.home-page) figure img{
   max-width: 480px;
   margin: 0 auto;
 }
+/* ---------- mobile image tuning (global) ---------- */
+@media (max-width: 600px){
+  /* 画像が画面を占領しがちなので、少しだけ内側に収める */
+  main img{
+    width: min(92vw, 720px);
+    margin: 0 auto;
+  }
+
+  /* 縦長スクショの「壁」対策 */
+  main figure img{
+    max-height: 68vh;
+    object-fit: contain;
+  }
+}
