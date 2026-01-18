@@ -199,9 +199,8 @@ body:not(.home-page) figure img{
     margin: 0 auto;
   }
 
-  /* 縦長スクショの「壁」対策 */
-  main figure img{
-    body:not(.log-page) main figure img{
+  /* 縦長スクショの「壁」対策（※ログページ以外） */
+  body:not(.log-page) main figure img{
     max-height: 68vh;
     object-fit: contain;
   }
