@@ -205,3 +205,21 @@ body:not(.home-page) figure img{
     object-fit: contain;
   }
 }
+/* ---------- log images (mobile) ---------- */
+@media (max-width: 600px){
+  .log-page figure{
+    margin: 18px 0;
+  }
+
+  .log-page figure img{
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+
+    /* これが“細い棒”の原因になりやすいので無効化 */
+    max-height: none;
+    object-fit: unset;
+
+    margin: 0 auto;
+  }
+}
