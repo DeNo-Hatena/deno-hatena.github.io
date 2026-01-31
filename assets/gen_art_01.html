@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Observed / Unobserved</title>
+  <style>
+    html,body{height:100%;margin:0;background:#0b0d10;overflow:hidden;}
+    canvas{display:block;width:100vw;height:100vh;}
+    .hint{
+      position:fixed;left:16px;bottom:12px;
+      color:rgba(255,255,255,.55);font:12px/1.4 system-ui;
+      user-select:none;pointer-events:none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div class="hint">観測＝表示された瞬間に一度だけ確定（リロードで別世界）</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d", { alpha: false });
+
+  // ---------------------------
+  // 量子っぽさ：未観測の内部状態
+  // ---------------------------
+  let state = {
+    seed: Math.random() * 1e9,
+    t: Math.random() * 1000,
+    // 抽象画の“場”のパラメータ
+    field: {
+      a: 0.6 + Math.random() * 1.2,
+      b: 0.6 + Math.random() * 1.2,
+      c: 0.6 + Math.random() * 1.2,
+      d: 0.6 + Math.random() * 1.2
+    },
+    palette: makePalette()
+  };
+
+  // 未観測で進む（描画しない）
+  const unobservedTimer = setInterval(() => {
+    // ここが「誰も見てない間も生成され続ける」
+    state.t += 0.016;
+    drift(state);
+  }, 16);
+
+  // 観測＝確定スナップショット
+  let observed = false;
+  let observedState = null;
+
+  function observeNow() {
+    if (observed) return;
+    observed = true;
+
+    // 画面サイズ確定（観測者要素の混入：viewport）
+    resize();
+
+    observedState = structuredClone(state);
+    observedState.viewer = {
+      w: canvas.width,
+      h: canvas.height,
+      dpr: devicePixelRatio || 1
+    };
+
+    // 以降は一度だけ描く（静止画）
+    render(observedState);
+  }
+
+  // 表示された瞬間に観測
+  window.addEventListener("pageshow", observeNow);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") observeNow();
+  });
+  // 初回ロードでも観測
+  if (document.visibilityState === "visible") observeNow();
+
+  // ---------------------------
+  // 描画
+  // ---------------------------
+  function render(s) {
+    const W = canvas.width, H = canvas.height;
+
+    // 背景：薄いグラデ
+    ctx.fillStyle = s.palette.bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // “場”を作る：ベクトル場っぽいノイズ（簡易）
+    // そこを粒子が流れて筆致になる
+    const particles = makeParticles(W, H, 900, s.seed);
+    ctx.globalCompositeOperation = "lighter";
+    ctx.lineWidth = Math.max(0.6, Math.min(W, H) * 0.0012);
+
+    for (let layer = 0; layer < 3; layer++) {
+      const color = s.palette.ink[layer % s.palette.ink.length];
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = 0.20 + layer * 0.12;
+
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        drawFlowStroke(p, s, W, H, 90 + layer * 40);
+      }
+    }
+
+    // 仕上げ：霧/粒状感
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 0.06;
+    grain(W, H, s.seed);
+    ctx.globalAlpha = 1;
+  }
+
+  function drawFlowStroke(p, s, W, H, steps) {
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+
+    let x = p.x, y = p.y;
+    const t0 = s.t;
+
+    for (let k = 0; k < steps; k++) {
+      const v = fieldVec(x, y, t0, s, W, H);
+      x += v.vx;
+      y += v.vy;
+
+      if (x < -20 || y < -20 || x > W + 20 || y > H + 20) break;
+      ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+
+  // ---------------------------
+  // ベクトル場（抽象画の骨格）
+  // ---------------------------
+  function fieldVec(x, y, t, s, W, H) {
+    // 正規化座標
+    const nx = (x / W) * 2 - 1;
+    const ny = (y / H) * 2 - 1;
+
+    // “場”：いくつかの周期関数を混ぜる（見栄え安定）
+    const f = s.field;
+    const a = f.a, b = f.b, c = f.c, d = f.d;
+
+    const u = Math.sin((nx * a + t * 0.7) * Math.PI) + Math.cos((ny * b - t * 0.5) * Math.PI);
+    const v = Math.cos((ny * c + t * 0.6) * Math.PI) - Math.sin((nx * d - t * 0.4) * Math.PI);
+
+    // 回転＋スケール（筆致の密度）
+    const ang = Math.atan2(v, u);
+    const mag = 1.2 + 0.9 * (Math.sin(u * 1.3) * Math.cos(v * 1.1));
+
+    const sp = Math.min(W, H) * 0.0022; // 全体の動き量
+    return {
+      vx: Math.cos(ang) * mag * sp,
+      vy: Math.sin(ang) * mag * sp
+    };
+  }
+
+  // ---------------------------
+  // 粒子初期化
+  // ---------------------------
+  function makeParticles(W, H, n, seed) {
+    const rnd = mulberry32(seed);
+    const ps = new Array(n);
+    for (let i = 0; i < n; i++) {
+      ps[i] = {
+        x: rnd() * W,
+        y: rnd() * H
+      };
+    }
+    return ps;
+  }
+
+  // ---------------------------
+  // 画面サイズ
+  // ---------------------------
+  function resize() {
+    const dpr = devicePixelRatio || 1;
+    canvas.width  = Math.floor(innerWidth * dpr);
+    canvas.height = Math.floor(innerHeight * dpr);
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(dpr, dpr);
+    // 以降の描画はCSSピクセル基準にしたいので戻す
+    canvas.width = innerWidth * dpr;
+    canvas.height = innerHeight * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+
+  window.addEventListener("resize", () => {
+    // 観測後のリサイズは “世界の再計算” になってしまうので、
+    // ここでは何もしない（作品の不可逆性を守る）
+  });
+
+  // ---------------------------
+  // 未観測の漂い
+  // ---------------------------
+  function drift(s) {
+    // 見えないところで、ほんの少しずつ世界が変化している
+    const r = mulberry32(s.seed + Math.floor(s.t * 60));
+    s.field.a += (r() - 0.5) * 0.002;
+    s.field.b += (r() - 0.5) * 0.002;
+    s.field.c += (r() - 0.5) * 0.002;
+    s.field.d += (r() - 0.5) * 0.002;
+  }
+
+  // ---------------------------
+  // パレット
+  // ---------------------------
+  function makePalette() {
+    // 完全ランダムより“抽象画として破綻しにくい”セット
+    const inks = [
+      "rgba(199,210,255,1)", // 淡い青紫
+      "rgba(255,210,199,1)", // 淡い橙
+      "rgba(199,255,233,1)", // 淡い緑
+      "rgba(255,255,255,1)"
+    ];
+    // 背景は暗め固定（Outer Wildsっぽい余白）
+    return {
+      bg: "rgb(10,12,16)",
+      ink: shuffle(inks, Math.random() * 1e9).slice(0, 3)
+    };
+  }
+
+  // ---------------------------
+  // 粒状感
+  // ---------------------------
+  function grain(W, H, seed) {
+    const rnd = mulberry32(seed + 12345);
+    const count = Math.floor((W * H) / 8000);
+    ctx.fillStyle = "white";
+    for (let i = 0; i < count; i++) {
+      const x = rnd() * W;
+      const y = rnd() * H;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+
+  // ---------------------------
+  // PRNG / util
+  // ---------------------------
+  function mulberry32(a) {
+    return function() {
+      let t = a += 0x6D2B79F5;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    }
+  }
+
+  function shuffle(arr, seed) {
+    const rnd = mulberry32(seed);
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+})();
+</script>
+</body>
+</html>
