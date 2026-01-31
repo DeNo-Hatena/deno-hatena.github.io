@@ -201,18 +201,25 @@
   });
 
   function observeNow() {
-    clearInterval(unobservedTimer);
-    observed = true;
-    status.textContent = "observed";
-    overlay.innerHTML = `確定：${WORKS[selectedIndex].title}<br>（再生成するにはリロード）`;
+  clearInterval(unobservedTimer);
+  observed = true;
+  status.textContent = "observed";
+  overlay.innerHTML = `確定：${WORKS[selectedIndex].title}<br>（再生成するにはリロード）`;
 
-    resizeMain();
-    observedState = structuredClone(state);
-    observedState.viewer = { w: innerWidth, h: innerHeight, dpr: devicePixelRatio || 1 };
-    observedState.workId = WORKS[selectedIndex].id;
+  const { W, H } = resizeMain();
 
-    // 一度だけ描画
-    WORKS[selectedIndex].renderer(mainCtx, innerWidth, innerHeight, observedState);
+  observedState = structuredClone(state);
+  observedState.viewer = { w: W, h: H, dpr: devicePixelRatio || 1 };
+  observedState.workId = WORKS[selectedIndex].id;
+
+  try {
+    WORKS[selectedIndex].renderer(mainCtx, W, H, observedState);
+  } catch (e) {
+    console.error("[main render failed]", WORKS[selectedIndex].id, e);
+    mainCtx.fillStyle = "rgb(10,12,16)";
+    mainCtx.fillRect(0, 0, W, H);
+    overlay.innerHTML = `生成に失敗：${WORKS[selectedIndex].title}<br>（Console を確認）`;
+  }
   }
 
   // リサイズは世界の再計算になるので無視（不可逆性）
