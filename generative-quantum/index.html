@@ -480,10 +480,19 @@
   // ---------------------------
   function resizeMain() {
     const dpr = devicePixelRatio || 1;
-    mainCanvas.width  = Math.floor(innerWidth * dpr);
-    mainCanvas.height = Math.floor(innerHeight * dpr);
-    mainCtx.setTransform(dpr,0,0,dpr,0,0);
-  }
+  const rect = mainCanvas.getBoundingClientRect();
+
+  const w = Math.max(1, Math.floor(rect.width  * dpr));
+  const h = Math.max(1, Math.floor(rect.height * dpr));
+
+  if (mainCanvas.width !== w)  mainCanvas.width  = w;
+  if (mainCanvas.height !== h) mainCanvas.height = h;
+
+  mainCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  // CSSピクセルで扱うため、以後は rect.width/height を W,H として使う
+  return { W: rect.width, H: rect.height };
+}
 
   function makeParticles(W, H, n, seed) {
     const rnd = mulberry32(seed);
