@@ -223,3 +223,48 @@ body:not(.home-page) figure img{
     margin: 0 auto;
   }
 }
+.image-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:18px;
+}
+
+.image-grid figure{
+  margin:0;
+}
+
+.image-grid figcaption{
+  margin-top:8px;
+}
+
+.media-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:22px;
+  align-items:start;
+}
+
+.video-block{
+  margin-bottom:18px;
+}
+
+.v-media{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#000;
+}
+
+.usage-title,
+.caption{
+  color:var(--fg);
+  font-size:14px;
+  margin:0 0 8px;
+}
+
+@media (max-width: 760px){
+  .image-grid,
+  .media-grid{
+    grid-template-columns:1fr;
+  }
+}
