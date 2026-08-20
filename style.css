@@ -1,0 +1,297 @@
+:root{
+  --bg:#0b0d10;
+  --fg:#e8e8e8;
+  --muted:#a9b0bb;
+  --line:#2a2f38;
+  --link:#c7d2ff;
+}
+
+html,body{height:100%;}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+               "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  line-height:1.8;
+}
+
+main{
+  max-width: 880px;
+  margin: 72px auto;
+  padding: 0 24px;
+}
+
+h1{
+  font-size: 42px;
+  letter-spacing: 0.02em;
+  margin: 0 0 18px;
+}
+
+p{
+  color:var(--muted);
+  margin: 0 0 18px;
+}
+
+hr{
+  border:0;
+  border-top:1px solid var(--line);
+  margin: 28px 0;
+}
+
+a{
+  color:var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(199,210,255,.35);
+}
+a:hover{
+  border-bottom-color: rgba(199,210,255,.9);
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+/* ---------- layout ---------- */
+
+.grid{
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+}
+@media (max-width: 860px){
+  .grid{ grid-template-columns: 1fr; }
+}
+
+.card{
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  background: rgba(255,255,255,0.02);
+}
+
+.kicker{
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.h2{
+  font-size: 20px;
+  margin: 0 0 10px;
+  color: var(--fg);
+}
+
+.small{ font-size: 14px; }
+
+.meta{
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ---------- profile ---------- */
+
+.profile{
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.portrait{
+  width: 84px;
+  height: 84px;
+  border-radius: 18px;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+/* ---------- list ---------- */
+
+.list{
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.list li{
+  padding: 10px 0;
+  border-top: 1px solid rgba(42,47,56,0.6);
+}
+.list li:first-child{ border-top: 0; }
+
+.badge{
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid rgba(42,47,56,0.9);
+  border-radius: 999px;
+  font-size: 12px;
+  margin-right: 6px;
+}
+
+/* ---------- works ---------- */
+
+.works-grid{
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 768px){
+  .works-grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ★ 共通サムネ（MahiroAIなど）：トリミングあり */
+.home-page .works-grid img{
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+/* ★ MahiLog 専用：横を切らない */
+.home-page .works-grid img.log-thumb{
+  aspect-ratio: 2 / 1;
+  object-fit: contain;
+  background: rgba(255,255,255,0.03);
+}
+
+/* video */
+.card video{
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.home-page .square-video{
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  background: #000;
+}
+
+/* ---------- wide canvas ---------- */
+
+@media (min-width: 900px){
+  .home-page main{
+    max-width: 1200px;
+  }
+}
+
+@media (min-width: 1280px){
+  .home-page main{
+    max-width: 1400px;
+  }
+}
+/* ---------- log images ---------- */
+
+body:not(.home-page) figure img{
+  width: min(100%, 720px);
+  margin: 0 auto;
+}
+/* ---------- mobile image tuning (global) ---------- */
+@media (max-width: 600px){
+  /* 画像が画面を占領しがちなので、少しだけ内側に収める */
+  main img{
+    width: min(92vw, 720px);
+    margin: 0 auto;
+  }
+
+  /* 縦長スクショの「壁」対策（※ログページ以外） */
+  body:not(.log-page) main figure img{
+    max-height: 68vh;
+    object-fit: contain;
+  }
+}
+/* ---------- log images (mobile) ---------- */
+@media (max-width: 600px){
+  .log-page figure{
+    margin: 18px 0;
+  }
+
+  .log-page figure img{
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+
+    /* これが“細い棒”の原因になりやすいので無効化 */
+    max-height: none;
+    object-fit: unset;
+
+    margin: 0 auto;
+  }
+}
+.image-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:18px;
+}
+
+.image-grid figure{
+  margin:0;
+}
+
+.image-grid figcaption{
+  margin-top:8px;
+}
+
+.media-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:22px;
+  align-items:start;
+}
+
+.video-block{
+  margin-bottom:18px;
+}
+
+.v-media{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#000;
+}
+
+.usage-title,
+.caption{
+  color:var(--fg);
+  font-size:14px;
+  margin:0 0 8px;
+}
+
+@media (max-width: 760px){
+  .image-grid,
+  .media-grid{
+    grid-template-columns:1fr;
+  }
+}
+/* ---------- video embed ---------- */
+
+.video-frame{
+  position: relative;
+  width: 100%;
+  max-width: 920px;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #000;
+}
+
+.video-frame iframe{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
