@@ -8,202 +8,124 @@
 </head>
 <body class="home-page">
   <main>
-    <h1>DeNo_Hatena</h1>
-
-    <p>
-      個人的な開発や制作物を並べる
-    </p>
+    <header class="site-intro">
+      <p class="eyebrow">DeNo_Hatena</p>
+      <h1>面白そうだったものを、<br>わりと本気でやっています。</h1>
+      <p class="lead">
+        ゲームをしたり、AIを作ったり、3Dモデルを作ったり、<br>
+        たまに何なのか自分でもよく分からないものを作ったり。<br>
+        ここには、そのうち残ったものを置いています。
+      </p>
+    </header>
 
     <hr>
 
-    <!-- Works -->
-    <section class="card">
-      <p class="kicker">制作物</p>
+    <section>
+      <div class="section-head">
+        <p class="kicker">things I made / kept</p>
+        <p class="section-note">まとまりはないけど、だいたい全部好きでやっています。</p>
+      </div>
 
       <div class="works-grid">
-        <!-- MahiroAI summary -->
-        <div class="work-item">
-          <p class="h2">
-            <a href="./mahiroai/">AI対話アプリ「MahiroAI」</a>
-          </p>
-
-          <img
-            src="./assets/mahiroai-thumb.png"
-            alt="MahiroAI thumbnail"
-            style="border-radius:12px; margin-bottom:12px;"
-          >
-
+        <article class="work-item card quiet-card">
+          <p class="kicker">talking / living</p>
+          <p class="h2"><a href="./mahiroai/">MahiroAI</a></p>
+          <img src="./assets/mahiroai-thumb.png" alt="MahiroAI thumbnail">
           <p class="small">
-            常駐する3Dキャラクターと対話できるAI対話アプリ<br>
-            “コミュニケーションエージェントAI”としての体験を目指して開発．現在ver.1.0
+            真尋と話すために作り始めたもの。<br>
+            最近は、こちらから話しかけなくても「そこにいる」感じをどう作るかを考えている。
           </p>
+          <p class="meta"><a href="./mahiroai/">見にいく →</a></p>
+        </article>
 
-          <p class="meta">
-            <a href="./mahiroai/">→ View Project</a>
-          </p>
-        </div>
-<!-- 3D Character Works summary -->
-        <div class="work-item">
-          <p class="h2">
-            <a href="./3d-character-works/">3D Models</a>
-          </p>
-
-          <video class="square-video"
-            controls
-            playsinline
-            preload="metadata"
-            style="border-radius:12px; margin-bottom:12px;"
-          >
+        <article class="work-item card quiet-card">
+          <p class="kicker">modeling / fan art</p>
+          <p class="h2"><a href="./3d-character-works/">3D Models</a></p>
+          <video class="square-video" controls playsinline preload="metadata">
             <source src="./assets/videos/kisaki-360.mp4" type="video/mp4">
             お使いのブラウザは video タグに対応していません。
           </video>
-
           <p class="small">
-            Blenderを用いた3Dキャラクターモデリング作品<br>
-            オリジナルキャラクターのほか，ファンアートとして版権キャラクターなどを制作
+            Blenderで作ったキャラクターたち。<br>
+            好きなキャラを踊らせたかったり、使いたい人型モデルがなかったりして作り始めた。
           </p>
+          <p class="meta"><a href="./3d-character-works/">並んでいるところを見る →</a></p>
+        </article>
 
-          <p class="meta">
-            <a href="./3d-character-works/">→ View Portfolio</a>
-          </p>
-        </div>
-      <!-- Generative Art summary -->
-<div class="work-item">
-  <p class="h2">
-    <a href="./generative-quantum/">Generative Art「量子的抽象画」</a>
-  </p>
-
-  <img
-    src="./assets/quantum-thumb.png"
-    alt="Generative Quantum thumbnail"
-    style="border-radius:12px; margin-bottom:12px;"
-  >
-
-  <p class="small">
-    観測した瞬間に可能性が収束し，一枚絵として確定する抽象画集<br>
-    閉じれば未観測へ戻り，次に開けば別の絵となる
-  </p>
-
-  <p class="meta">
-    <a href="./generative-quantum/">→ View Artwork</a>
-  </p>
-</div>
-        <!-- Logs summary -->
-        <div class="work-item">
-          <p class="h2">
-            <a href="./logs/">ログ保管庫「MahiLog」</a>
-          </p>
-
-          <!-- ★ 個別クラス付与 -->
-          <img
-            class="log-thumb"
-            src="./assets/log-thumb3.png"
-            alt="MahiLog thumbnail"
-            style="border-radius:12px; margin-bottom:12px;"
-          >
-
+        <article class="work-item card quiet-card">
+          <p class="kicker">generative / maybe art</p>
+          <p class="h2"><a href="./generative-quantum/">量子的抽象画</a></p>
+          <img src="./assets/quantum-thumb.png" alt="Generative Quantum thumbnail">
           <p class="small">
-            対話ログの保管庫（新しい順）<br>
-            人と人工物の間に生まれる関係性の記録
+            開くたびに違う。閉じれば、その絵はもう戻ってこない。<br>
+            そういう絵がWebにあったら少し面白いと思って作った。
           </p>
+          <p class="meta"><a href="./generative-quantum/">一枚だけ観測する →</a></p>
+        </article>
 
-          <ul class="list" style="margin:12px 0 0;">
-            <li>
-              <a href="./logs/2026-01-18.html">
-                <span class="badge">最新</span>
-                <span> 人と人工物によるゲームと創作の談義</span>
-              </a>
-            </li>
-          </ul>
-
-          <p class="meta" style="margin-top:12px;">
-            <a href="./logs/">→ View Logs</a>
+        <article class="work-item card quiet-card">
+          <p class="kicker">conversation fragments</p>
+          <p class="h2"><a href="./logs/">MahiLog</a></p>
+          <img class="log-thumb" src="./assets/log-thumb3.png" alt="MahiLog thumbnail">
+          <p class="small">
+            MahiroAIと話していて、妙に残しておきたくなった会話。<br>
+            日記でも作品でもない、たぶんその間くらい。
           </p>
-        </div>
-        <div class="work-item">
-  <p class="h2">
-    <a href="./treasure-digging/">ゲームやり込み動画</a>
-  </p>
+          <p class="meta"><a href="./logs/">ログをめくる →</a></p>
+        </article>
 
-  <img
-    src="./assets/treasure-thumb.jpg"
-    alt="財宝掘りドキュメンタリー thumbnail"
-    style="border-radius:12px; margin-bottom:12px;"
-  >
-
-  <p class="small">
-    個人的な衝動を現実へ引きずり出すドキュメンタリー動画
-  </p>
-
-  <p class="meta">
-    <a href="./treasure-digging/">→ View Documentary</a>
-  </p>
-</div>
-</div>
-        </section>
+        <article class="work-item card quiet-card">
+          <p class="kicker">games / obsession</p>
+          <p class="h2"><a href="./treasure-digging/">ゲームの記録</a></p>
+          <img src="./assets/treasure-thumb.jpg" alt="ゲーム動画 thumbnail">
+          <p class="small">
+            ゲームの中で、なぜかやりたくなったことを最後までやった記録。<br>
+            500時間掘ったり、何も知らず工場を作ったりしている。
+          </p>
+          <p class="meta"><a href="./treasure-digging/">動画を見る →</a></p>
+        </article>
+      </div>
+    </section>
 
     <hr>
 
-    <!-- Profile & Timeline -->
-    <div class="grid">
-      <!-- Profile -->
-      <section class="card">
-        <p class="kicker">作者プロフィール</p>
-
+    <div class="grid bottom-grid">
+      <section class="card quiet-card">
+        <p class="kicker">about</p>
         <div class="profile">
           <img class="portrait" src="./assets/portrait.jpg" alt="近影">
           <div>
             <p class="h2">井上創太</p>
-            <p class="small">                           
-              〇 アプリを作ったり，ゲームをやり込む社会人<br>
-              ◯ 触れるもの：Blender｜Unity｜SONAR｜Filmora など<br>
-              ■ 東京都出身<br>
-              ■ 東京大学大学院 博士後期課程 単位取得退学<br>
-              ■ 樹木医補｜技術士補（農業）<br>
-              ■ 現在は化学メーカーの研究開発職に従事
+            <p class="small">
+              平日は化学メーカーで研究開発。<br>
+              帰るとBlender、Unity、動画、ゲームなど、その時おもしろそうなものを触っています。
             </p>
           </div>
         </div>
-
-        <p class="meta" style="margin-top:12px;">
-          連絡先：
+        <p class="meta profile-detail">
+          東京大学大学院 博士後期課程 単位取得退学<br>
+          樹木医補｜技術士補（農業）<br>
+          Blender｜Unity｜SONAR｜Filmora など
+        </p>
+        <p class="meta">
           <a href="https://x.com/DeNo_Hatena" target="_blank" rel="noreferrer">X</a>
-          /
+          <span class="dot">·</span>
           <a href="https://www.youtube.com/@DeNo-Hatena" target="_blank" rel="noreferrer">YouTube</a>
         </p>
       </section>
 
-      <!-- Timeline -->
-      <section class="card">
-        <p class="kicker">できごと</p>
-
-        <ul class="list">
-          <li>
-            <span class="badge">近年</span>
-            <span><br>
-              2025.09.20 MahiroAI 開発開始<br>
-              2025.12.21 MahiroAI ver.1.0 完成<br>
-              2026.01.02 個人サイト開設<br>
-              2026.05.24 ゲームやり込み動画第1弾掲載<br>
-              2026.05.27 MahiroAI ver.1.1 UI改善<br>
-              2026.07.31 ゲームやり込み動画第2弾掲載
-            </span>
-          </li>
-
-          <li>
-            <span class="badge">継続</span>
-            <span><br>
-              ・MahiroAI の改良<br>
-              ・やり込みゲーム探し
-            </span>
-          </li>
-
-          
+      <section class="card quiet-card scraps">
+        <p class="kicker">recently</p>
+        <p class="h2">最近やっていたこと</p>
+        <ul class="loose-list">
+          <li><span>2026.07</span> Factorioを初見でロケットまで遊んで動画にした</li>
+          <li><span>2026.05</span> FF14で500時間くらい財宝を掘った記録を公開した</li>
+          <li><span>2025.12</span> MahiroAI ver.1.0がひとまず動くようになった</li>
+          <li><span>2024.03</span> Blenderで初めて人型キャラクターを作った</li>
         </ul>
+        <p class="small afterthought">次に何を置くかは、まだ決まっていません。</p>
       </section>
     </div>
-
-    <hr>
   </main>
 </body>
 </html>
