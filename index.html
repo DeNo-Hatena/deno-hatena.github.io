@@ -5,6 +5,22 @@
   <title>DeNo_Hatena</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./style.css">
+  <style>
+    .singing-thumb {
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,.10), transparent 30%),
+        linear-gradient(145deg, #171717, #2b2b2b);
+      color: rgba(255,255,255,.82);
+      letter-spacing: .16em;
+      font-size: .82rem;
+      text-transform: uppercase;
+    }
+  </style>
 </head>
 <body class="home-page">
   <main>
@@ -12,7 +28,7 @@
       <p class="eyebrow">DeNo_Hatena</p>
       <h1>気になることを、<br>気が済むまで。</h1>
       <p class="lead">
-        ゲームをしたり、AIを作ったり、3Dモデルを作ったり、<br>
+        ゲームをしたり、AIを作ったり、3Dモデルを作ったり、歌ったり。<br>
         たまに何なのか自分でもよく分からないものを作ったり。<br>
         ここには、そのうち残ったものを置いています。
       </p>
@@ -72,6 +88,17 @@
             そういう絵がWebにあったら少し面白いと思って作った。
           </p>
           <p class="meta"><a href="./generative-quantum/">一枚だけ観測する →</a></p>
+        </article>
+
+        <article class="work-item card quiet-card">
+          <p class="kicker">voice / covers</p>
+          <p class="h2"><a href="./covers/">歌ってみた</a></p>
+          <div class="singing-thumb" aria-label="歌ってみた thumbnail">VOICE / ARCHIVE</div>
+          <p class="small">
+            かつて歌って、録って、動画にしていたもの。<br>
+            YouTubeに残している過去の歌を、ここから聴けるようにしている。
+          </p>
+          <p class="meta"><a href="./covers/">聴きにいく →</a></p>
         </article>
       </div>
     </section>
