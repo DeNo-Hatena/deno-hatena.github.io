@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>歌ってみた | DeNo_Hatena</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .covers-page main {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .covers-back {
+      margin-bottom: 2.5rem;
+    }
+
+    .covers-back a {
+      text-decoration: none;
+    }
+
+    .covers-intro {
+      margin-bottom: 3rem;
+    }
+
+    .covers-intro .lead {
+      max-width: 760px;
+    }
+
+    .video-list {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .cover-video {
+      padding: 1.1rem;
+    }
+
+    .cover-video-head {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: .9rem;
+      flex-wrap: wrap;
+    }
+
+    .cover-video-head .h2,
+    .cover-video-head .meta {
+      margin: 0;
+    }
+
+    .youtube-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #111;
+    }
+
+    .youtube-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .cover-note {
+      margin-top: .9rem;
+      margin-bottom: 0;
+    }
+
+    .empty-state {
+      padding: 3rem 1.25rem;
+      text-align: center;
+    }
+
+    .empty-state code {
+      font-size: .92em;
+    }
+
+    @media (max-width: 640px) {
+      .cover-video {
+        padding: .8rem;
+      }
+    }
+  </style>
+</head>
+<body class="covers-page">
+  <main>
+    <p class="meta covers-back"><a href="../">← DeNo_Hatena</a></p>
+
+    <header class="site-intro covers-intro">
+      <p class="eyebrow">voice / covers</p>
+      <h1>歌ってみた</h1>
+      <p class="lead">
+        昔、歌って、録って、動画にしていたもの。<br>
+        今見ると少し気恥ずかしいけれど、これも確かに作ったものなので残しておく。
+      </p>
+      <p class="small">
+        YouTubeでは限定公開にしている動画を、このページから再生できるようにしています。
+      </p>
+    </header>
+
+    <hr>
+
+    <section>
+      <div class="section-head">
+        <p class="kicker">recordings / archive</p>
+        <p class="section-note">再生ボタンを押すとYouTubeの埋め込みプレイヤーで再生されます。</p>
+      </div>
+
+      <div id="video-list" class="video-list"></div>
+
+      <div id="empty-state" class="card quiet-card empty-state">
+        <p class="h2">まだ動画は登録していません。</p>
+        <p class="small">
+          このHTML末尾の <code>videos</code> に、限定公開YouTubeのURLを追加するとここに並びます。
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /*
+      ここに動画を追加するだけでページに自動表示されます。
+
+      例:
+      {
+        title: "曲名 / 原曲アーティスト",
+        url: "https://youtu.be/XXXXXXXXXXX",
+        date: "2019.08",
+        note: "当時の一言メモ。不要なら空欄でOK。"
+      }
+    */
+    const videos = [
+      {
+        title: "退紅トレイン",
+        url: "https://youtu.be/T-l0x0YvsS4",
+        date: "",
+        note: ""
+      },
+      {
+        title: "はてなき",
+        url: "https://youtu.be/EnGr9yKEO9s",
+        date: "",
+        note: ""
+      },
+      {
+        title: "potatoになっていく",
+        url: "https://youtu.be/MIFi107D5Bs",
+        date: "",
+        note: ""
+      },
+      {
+        title: "ハルノ寂寞",
+        url: "https://youtu.be/GuYwXQWDNoQ",
+        date: "",
+        note: ""
+      },
+    ];
+
+    function getYouTubeId(url) {
+      try {
+        const u = new URL(url);
+
+        if (u.hostname === "youtu.be") {
+          return u.pathname.slice(1).split("/")[0];
+        }
+
+        if (u.hostname.includes("youtube.com")) {
+          if (u.pathname === "/watch") return u.searchParams.get("v");
+          if (u.pathname.startsWith("/embed/")) return u.pathname.split("/")[2];
+          if (u.pathname.startsWith("/shorts/")) return u.pathname.split("/")[2];
+        }
+      } catch (_) {}
+
+      return null;
+    }
+
+    const list = document.getElementById("video-list");
+    const empty = document.getElementById("empty-state");
+    let rendered = 0;
+
+    videos.forEach((video) => {
+      const id = getYouTubeId(video.url);
+      if (!id) return;
+
+      const article = document.createElement("article");
+      article.className = "card quiet-card cover-video";
+
+      const head = document.createElement("div");
+      head.className = "cover-video-head";
+
+      const title = document.createElement("p");
+      title.className = "h2";
+      title.textContent = video.title || "Untitled";
+
+      const date = document.createElement("p");
+      date.className = "meta";
+      date.textContent = video.date || "";
+
+      head.appendChild(title);
+      head.appendChild(date);
+
+      const frameWrap = document.createElement("div");
+      frameWrap.className = "youtube-frame";
+
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}`;
+      iframe.title = video.title || "YouTube video";
+      iframe.loading = "lazy";
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+
+      frameWrap.appendChild(iframe);
+      article.appendChild(head);
+      article.appendChild(frameWrap);
+
+      if (video.note) {
+        const note = document.createElement("p");
+        note.className = "small cover-note";
+        note.textContent = video.note;
+        article.appendChild(note);
+      }
+
+      list.appendChild(article);
+      rendered += 1;
+    });
+
+    if (rendered > 0) {
+      empty.hidden = true;
+    }
+  </script>
+</body>
+</html>
